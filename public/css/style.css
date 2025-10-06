@@ -1,0 +1,386 @@
+/* ========== Reset dasar ========== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+a {
+  text-decoration: none;
+}
+
+body {
+  background: #f4f6f9;
+  color: #333;
+}
+
+.logoL{
+    color: #fff;
+    text-decoration: none;
+}
+
+.chart-container {
+  max-width: 800px;
+  margin: 30px auto;
+  background: white;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+/* ========== HEADER ========== */
+header {
+  background: #0077b6;
+  color: white;
+  padding: 15px 20px;
+  display: flex;
+  justify-content: space-between; 
+  align-items: center;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+  position: relative; 
+}
+
+header h3 {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+/* ========== MENU NAV ========== */
+nav {
+  position: relative; 
+}
+
+nav ul {
+  list-style: none;
+  display: flex;
+  gap: 20px;
+}
+
+nav ul li {
+  display: inline;
+}
+
+nav ul li a,
+nav ul li button {
+  text-decoration: none;
+  color: white;
+  font-weight: 700;
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: color 0.3s;
+  font: inherit; /* agar font sama dengan link */
+  padding: 0;
+}
+
+nav ul li a:hover,
+nav ul li button:hover {
+  color: #ffd166;
+}
+
+/* Tombol hamburger */
+.menu-toggle {
+  font-size: 24px;
+  background: none;
+  border: none;
+  color: white;
+  cursor: pointer;
+  display: none; 
+  margin-left: auto; 
+}
+
+/* ========== SECTION ========== */
+section {
+  max-width: 90%;
+  margin: 30px auto;
+  background: white;
+  padding: 25px;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+section h1 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #0077b6;
+}
+
+/* ========== FORM ========== */
+.tambah {
+  display: flex;
+  flex-direction: column;
+  max-width: 90%; /* atur lebar form */
+  margin: 20px auto; /* biar di tengah */
+  background: #fff;
+  padding: 20px;
+}
+
+.tambah label {
+  margin: 8px 0 4px;
+  font-weight: 500;
+  width: 150px; /* lebar label */
+}
+
+.tambah input {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  margin-bottom: 12px;
+  transition: border 0.3s;
+  width: 100%; /* biar input menyesuaikan max-width form */
+  box-sizing: border-box;
+}
+
+.tambah input:focus {
+  border: 1px solid #0077b6;
+  outline: none;
+}
+
+.tambah button {
+  padding: 12px;
+  background: #0077b6;
+  border: none;
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.tambah button:hover {
+  background: #005f87;
+}
+
+
+/* ========== TABEL ========== */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+  background: white;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+table th, table td {
+  padding: 12px;
+  border: 1px solid #ddd;
+  text-align: center;
+}
+
+table th {
+  background: #0077b6;
+  color: white;
+}
+
+.btn-edit,
+.btn-hapus {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 6px 12px;
+  color: white;
+  text-decoration: none;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.btn-edit {
+  background-color: #4CAF50;
+}
+
+.btn-hapus {
+  background-color: #f44336;
+}
+
+.btn-edit:hover {
+  background-color: #45a049;
+}
+
+.btn-hapus:hover {
+  background-color: #da190b;
+}
+
+
+.search-form {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 15px;
+}
+
+.search-form label {
+  font-weight: 500;
+  color: #333;
+  margin-right: 5px;
+}
+
+.search-form input {
+  padding: 6px;
+  width: 220px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.search-form button {
+  padding: 4px 10px;
+  font-size: 13px;
+  border: none;
+  background-color: #3498db;
+  color: white;
+  border-radius: 4px;
+  cursor: pointer;
+  width: auto;
+  height: 32px;
+  line-height: 1;
+}
+
+.search-form button:hover {
+  background-color: #2980b9;
+}
+
+
+.login-wrapper {
+  text-align: center;
+  margin-top: 40px; /* biar turun sedikit dari atas */
+}
+
+.login-container {
+  max-width: 400px;
+  margin: 80px auto;
+  padding: 30px;
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+  text-align: center;
+}
+.sambut {
+  text-align: center;       
+  margin-bottom: 20px;      
+  font-size: 18px;          
+  font-weight: bold;        
+}
+
+.login-container h2 {
+  margin-bottom: 20px;
+  color: #0077b6;
+}
+
+.login-container form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.login-container input {
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 14px;
+}
+
+.login-container input:focus {
+  border-color: #0077b6;
+  outline: none;
+}
+
+.login-container button {
+  padding: 12px;
+  background: #0077b6;
+  color: white;
+  border: none;
+  font-size: 16px;
+  font-weight: bold;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.login-container button:hover {
+  background: #005f87;
+}
+
+/* Logout link */
+.logout {
+  color: #ffd166 !important;
+  font-weight: bold;
+}
+.logout:hover {
+  color: #ffb703 !important;
+}
+
+.sambut {
+  text-align: center;
+  margin-top: 40px;
+  margin-bottom: 20px;
+  font-size: 40px;
+  font-weight: bold;
+}
+
+.pagination li {
+    margin: 0 5px;
+}
+
+.pagination li a,
+.pagination li span {
+    padding: 6px 12px;
+    border: 1px solid #0077b6;
+    color: #0077b6;
+    text-decoration: none;
+    border-radius: 4px;
+}
+
+
+
+/* ========== RESPONSIVE ========== */
+@media (max-width: 768px) {
+  nav ul {
+    display: none;
+    flex-direction: column;
+    background: #0077b6;
+    position: absolute;
+    top: 30px;   
+    right: 0;
+    width: 220px;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 5px 10px rgba(0,0,0,0.15);
+    margin: auto;
+  }
+
+  nav ul.show {
+    display: flex; 
+    animation: slideDown 0.3s ease;
+  }
+
+  nav ul li {
+    text-align: left;
+  }
+
+  nav ul li a {
+    padding: 12px 15px;
+    display: block;
+  }
+
+  .menu-toggle {
+    display: block; 
+  }
+  
+  section {
+    max-width: 100%; 
+    padding: 20px;
+  }
+}
+
+/* Animasi dropdown */
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
