@@ -331,6 +331,33 @@ table th {
     border-radius: 4px;
 }
 
+.card {
+  background-color: #fff;
+  border-radius: 10px;
+  width: 340px;
+  height: 180px;
+  text-align: center;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  margin-left: 80px;
+
+  display: flex;            /* Flex untuk centering */
+  flex-direction: column;   /* Susun vertikal */
+  justify-content: center;  /* Vertikal di tengah */
+  align-items: center;      /* Horizontal di tengah */
+}
+
+.card h4 {
+  margin-bottom: 10px;
+  font-size: 24px;
+  color: #555;
+}
+
+.card .count {
+  font-size: 32px;
+  font-weight: bold;
+  color: #333;
+}
+
 
 
 /* ========== RESPONSIVE ========== */

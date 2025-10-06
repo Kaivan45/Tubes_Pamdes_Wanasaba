@@ -53,4 +53,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(Data::class, 'user_id');
     }
+
+    public static function totalRegularUsers()
+    {
+        return self::where('role', 'user')->count();
+    }
 }

@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\Data;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
@@ -10,7 +11,8 @@ use App\Http\Controllers\UserController;
 Route::middleware(['auth'])->group(function () {
     Route::get('/', function () {
         if(Auth::user()->role == 'admin'){
-            return view('haladmin', ['title' => 'Dashboard Admin']);
+            $jumlahUser = User::totalRegularUsers();
+            return view('haladmin', ['title' => 'Dashboard Admin', 'jumlahUser' => $jumlahUser]);
         } else {
             return redirect('/pelanggan');
         }
