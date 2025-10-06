@@ -1,6 +1,6 @@
-# Aplikasi Desa Wanasaba
+# Pamdes Wanasaba
 
-Aplikasi Desa Wanasaba adalah solusi digital yang dirancang untuk meningkatkan efisiensi pengelolaan **air bersih PAMDES**. Melalui website ini, seluruh proses mulai dari pencatatan meter, perhitungan tagihan, hingga pembayaran iuran dapat dilakukan secara **otomatis** dan **transparan**.
+Pamdes Wanasaba adalah solusi digital yang dirancang untuk meningkatkan efisiensi pengelolaan **air bersih PAMDES**. Melalui website ini, seluruh proses mulai dari pencatatan meter, perhitungan tagihan, hingga pembayaran iuran dapat dilakukan secara **otomatis** dan **transparan**.
 
 ## Fitur Utama
 
