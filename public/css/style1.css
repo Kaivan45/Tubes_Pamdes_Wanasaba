@@ -1,0 +1,83 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+a {
+  text-decoration: none;
+}
+
+body {
+  background: #f4f6f9;
+  color: #333;
+}
+
+.logoL{
+    color: #fff;
+    text-decoration: none;
+}
+
+header {
+  background: #0077b6;
+  color: white;
+  padding: 15px 20px;
+  display: flex;
+  justify-content: space-between; 
+  align-items: center;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+  position: relative; 
+}
+
+header h3 {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+nav {
+  position: relative; 
+}
+
+nav ul {
+  list-style: none;
+  display: flex;
+  gap: 20px;
+}
+
+nav ul li {
+  display: inline;
+}
+
+nav ul li a,
+nav ul li button {
+  text-decoration: none;
+  color: white;
+  font-weight: 700;
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: color 0.3s;
+  font: inherit; /* agar font sama dengan link */
+  padding: 0;
+}
+
+nav ul li a:hover,
+nav ul li button:hover {
+  color: #ffd166;
+}
+
+section {
+  max-width: 90%;
+  margin: 30px auto;
+  background: white;
+  padding: 25px;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+section h1 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #0077b6;
+}
