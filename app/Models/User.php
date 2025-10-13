@@ -56,6 +56,6 @@ class User extends Authenticatable
 
     public static function totalRegularUsers()
     {
-        return self::where('role', 'user')->count();
+        return self::where('role', 'pelanggan')->count();
     }
 }

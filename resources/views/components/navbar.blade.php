@@ -8,6 +8,7 @@
             <ul id="menu">
                 <li><a href="/tampil">Tampil Data</a></li>
                 <li><a href="/haltambah">Tambah Pelanggan</a></li>
+                <li><a href="/datauser">Input Meteran</a></li>
                <li>
                     <form action="{{ route('logout') }}" method="POST" style="display:inline">
                         @csrf

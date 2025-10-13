@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DataController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\PelangganController;
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/', function () {
@@ -28,7 +29,6 @@ Route::middleware(['auth'])->group(function () {
             'data' => Data::with('user')
                         ->filter()
                         ->belumLunasFirst()
-                        ->lastperUser()
                         ->simplePaginate(10)
                         ->withQueryString()
         ]);
@@ -36,13 +36,24 @@ Route::middleware(['auth'])->group(function () {
 
     Route::post('/data/store', [DataController::class, 'store'])->name('data.store');
 
-    Route::get('/pelanggan', function () {
-        return view('home', ['title' => 'Dashboard Pelanggan']);
-    });
+    Route::get('/pelanggan', [PelangganController::class, 'index'])->name('pelanggan.index');
+
+    Route::get('/data/{data:slug}/edit', [DataController::class, 'edit'])->name('data.edit');
+
+    Route::put('/data/{data:slug}', [DataController::class, 'update'])->name('data.update');
 
     Route::get('/data/{data:slug}', [DataController::class, 'show'])->name('data.show');
 
+    Route::get('/datauser', [DataController::class, 'index'])->name('data.index');
+    
+    Route::get('/data/create/{username}', [DataController::class, 'create'])->name('data.create');
+
+    Route::post('/data/store', [DataController::class, 'store2'])->name('data.store2');
+
+    Route::put('/data/{data:slug}', [DataController::class, 'update'])->name('data.update');
+
     Route::resource('users', UserController::class);
+    
     Route::resource('data', DataController::class);
 
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');

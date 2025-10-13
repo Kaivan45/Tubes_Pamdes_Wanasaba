@@ -1,5 +1,6 @@
 <x-layout>
     <x-slot:title>{{ $title }}</x-slot:title>
+
     @if(session('success'))
         <div class="alert alert-success">
             {{ session('success') }}
@@ -13,7 +14,8 @@
             @endforeach
         </div>
     @endif
-    <h1>Tampil Data</h1>
+    
+    <h1>Data User</h1>
 
      <form class="search-form">
         <input type="text" name="search" placeholder="Cari..." value="" autocomplete="off">
@@ -27,8 +29,6 @@
                 <th>Nama</th>
                 <th>Alamat</th>
                 <th>NO HP</th>
-                <th>Jatuh Tempo</th>
-                <th>Status</th>
                 <th>Aksi</th>
             </tr>
         </thead>
@@ -36,17 +36,15 @@
             @foreach ($data as $d)
             <tr>
                 <td>{{ $loop->iteration }}</td>
-                <td>{{ $d->user->name }}</td>
-                <td>{{ $d->user->alamat }}</td>
-                <td>{{ $d->user->noHp }}</td>
-                <td>{{ $d->tanggal }}</td>
-                <td>{{ $d->status }}</td>
+                <td>{{ $d->name }}</td>
+                <td>{{ $d->alamat }}</td>
+                <td>{{ $d->noHp }}</td>
                 <td style="display: flex; gap: 8px;">
-                    <a href="/data/{{ $d->slug }}/edit" class="btn-edit">
-                        <i class="fa-solid fa-pen-to-square"></i> 
+                    <a href="{{ route('data.create', $d->username) }}" class="btn-edit">
+                        Input Meteran
                     </a> 
                     | 
-                    <form action="{{ route('data.destroy', $d->slug) }}" method="POST" onsubmit="return confirm('Yakin hapus data ini?')">
+                    <form action="" method="POST" onsubmit="return confirm('Yakin hapus data ini?')">
                         @csrf
                         @method('DELETE')
                         <button type="submit" class="btn-hapus"><i class="fa-solid fa-trash"></i></button>

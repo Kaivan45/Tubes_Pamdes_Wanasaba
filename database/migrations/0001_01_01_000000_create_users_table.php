@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('password');
             $table->string('alamat')->nullable();
             $table->string('noHp', 15)->nullable();
-            $table->string('role')->default('user');
+            $table->string('role')->default('pelanggan');
             $table->timestamps();
             $table->rememberToken();
         });

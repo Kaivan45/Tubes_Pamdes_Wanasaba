@@ -121,7 +121,7 @@ section h1 {
   width: 150px; /* lebar label */
 }
 
-.tambah input {
+.tambah input,option, select {
   padding: 10px;
   border: 1px solid #ccc;
   border-radius: 6px;
