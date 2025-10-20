@@ -126,7 +126,6 @@ class DataController extends Controller
      */
     public function destroy(Data $data)
     {
-        $data->user->delete();
         $data->delete();
         return redirect('/tampil')->with('success', 'Data berhasil dihapus!');
     }
