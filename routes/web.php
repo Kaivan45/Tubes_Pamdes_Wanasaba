@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DataController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\PelangganController;
 
 Route::middleware(['auth'])->group(function () {
@@ -57,6 +58,10 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('data', DataController::class);
 
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+
+    Route::get('/pay/{id}', [PaymentController::class, 'pay'])->name('payment.pay');
+    
+    Route::post('/midtrans/callback', [PaymentController::class, 'callback']);
 });
 
 Route::get('/login', function () {

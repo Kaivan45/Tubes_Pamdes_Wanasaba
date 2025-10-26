@@ -66,7 +66,7 @@
                     Harga: {{ $dataTerakhir->harga }} <br>
                     Jatuh Tempo: {{ $dataTerakhir->tanggal }} <br>
                     Status: {{ $dataTerakhir->status }} <br>
-                    <a href="">Lakukan Pembayaran</a>
+                    <a href="{{ route('payment.pay', $dataTerakhir->id) }}">Lakukan Pembayaran</a>
                 </div>
             @else
                 <div class="container">
