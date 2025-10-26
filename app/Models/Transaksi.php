@@ -23,7 +23,7 @@ class Transaksi extends Model
 
     public function meteran()
     {
-        return $this->belongsTo(Data::class, 'id_meteran');
+        return $this->belongsTo(Data::class, 'id_meteran', 'id');
     }
 }
 

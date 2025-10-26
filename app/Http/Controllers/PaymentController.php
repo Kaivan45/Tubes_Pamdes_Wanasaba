@@ -21,18 +21,27 @@ class PaymentController extends Controller
     {
         $transaksi = Transaksi::findOrFail($id);
 
+        $user = $transaksi->data->user;
+
+        $customerEmail = 'user' . $user->id . '@example.com';
+
         $params = [
             'transaction_details' => [
                 'order_id' => $transaksi->id,
-                'gross_amount' => $transaksi->harga,
+                'gross_amount' => intval($transaksi->data->harga),
             ],
             'customer_details' => [
-                'first_name' => 'Pelanggan',
-                'email' => 'email@contoh.com',
+                'first_name' => $user->name ?? 'Pelanggan',
+                'email' => $customerEmail,
             ]
         ];
 
         $snapToken = Snap::getSnapToken($params);
+
+        if (!$snapToken) {
+            dd('Snap token gagal dibuat', $params);
+        }
+
         return view('payment.qris', compact('snapToken', 'transaksi'));
     }
 
