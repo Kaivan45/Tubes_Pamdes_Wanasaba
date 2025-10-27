@@ -23,14 +23,14 @@ class DataController extends Controller
                 ->orWhere('alamat', 'like', "%$search%")
                 ->orWhere('noHp', 'like', "%$search%");
             });
-    }
+        }
 
-    $data = $query->Simplepaginate(10);
+        $data = $query->Simplepaginate(10);
 
-    return view('datauser', [
-        'title' => 'Data Pelanggan',
-        'data' => $data
-    ]);
+        return view('datauser', [
+            'title' => 'Data Pelanggan',
+            'data' => $data
+        ]);
     }
 
     /**
@@ -128,5 +128,14 @@ class DataController extends Controller
     {
         $data->delete();
         return redirect('/tampil')->with('success', 'Data berhasil dihapus!');
+    }
+
+    public function destroy2($username)
+    {
+        $user = User::where('username', $username)->first();
+
+        $user->delete();
+
+        return redirect()->back()->with('success', 'User berhasil dihapus.');
     }
 }

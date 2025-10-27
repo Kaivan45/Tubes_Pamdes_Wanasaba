@@ -15,6 +15,7 @@
         </div>
         <nav>
             <ul id="menu">
+                <li><a href="https://wa.me/6289512996464">Contact Us</a></li>
                <li>
                      <form action="{{ route('logout') }}" method="POST" style="display:inline">
                         @csrf
@@ -23,6 +24,7 @@
                         </button>
                     </form>
                 </li>
+                
             </ul>
         </nav>
     </header>

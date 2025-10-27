@@ -51,18 +51,18 @@ class UserController extends Controller
         ]);
 
         $validated['password'] = Hash::make($validated['password']);
-        $validated['role'] = 'user';
+        $validated['role'] = 'pelanggan';
 
         $user = User::create($validated);
 
-        Data::create([
-            'user_id' => $user->id,         
-            'meteran' => 0,                 
-            'harga' => 0,                   
-            'tanggal' => now(),             
-            'status' => 'Belum Lunas',
-            'slug' => $user->id . uniqid(),
-        ]);
+        // Data::create([
+        //     'user_id' => $user->id,         
+        //     'meteran' => 0,                 
+        //     'harga' => 0,                   
+        //     'tanggal' => now(),             
+        //     'status' => 'Belum Lunas',
+        //     'slug' => $user->id . uniqid(),
+        // ]);
 
         return redirect('/haltambah')->with('success', 'Data berhasil ditambahkan!');
     }
@@ -94,8 +94,9 @@ class UserController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(User $user)
     {
-        //
+        // $user->delete();
+        // return redirect('/tampil')->with('success', 'User berhasil dihapus!');
     }
 }

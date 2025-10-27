@@ -44,7 +44,7 @@
                         Input Meteran
                     </a> 
                     | 
-                    <form action="" method="POST" onsubmit="return confirm('Yakin hapus data ini?')">
+                    <form action="{{ route('data.destroy2', $d->username) }}" method="POST" onsubmit="return confirm('Yakin hapus data ini?')">
                         @csrf
                         @method('DELETE')
                         <button type="submit" class="btn-hapus"><i class="fa-solid fa-trash"></i></button>

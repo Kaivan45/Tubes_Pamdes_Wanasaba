@@ -20,8 +20,8 @@ class DatabaseSeeder extends Seeder
         ]);
 
 
-        Data::factory(50)->recycle([
-            User::factory(14)->create()
-        ])->create();
+        // Data::factory(50)->recycle([
+        //     User::factory(14)->create()
+        // ])->create();
     }
 }

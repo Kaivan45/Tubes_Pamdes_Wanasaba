@@ -58,4 +58,9 @@ class User extends Authenticatable
     {
         return self::where('role', 'pelanggan')->count();
     }
+
+    public function getRouteKeyName()
+    {
+        return 'username';
+    }
 }
