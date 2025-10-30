@@ -69,17 +69,57 @@
                     Harga: {{ $dataTerakhir->harga }} <br>
                     Jatuh Tempo: {{ $dataTerakhir->tanggal }} <br>
                     Status: {{ $dataTerakhir->status }} <br>
-                    <a href="{{ route('payment.pay', $dataTerakhir->id) }}">Lakukan Pembayaran</a>
-                </div>
+                    <button id="payButton">Lakukan Pembayaran</button>
+
+            <div id="paymentOptions" style="display:none; margin-top:10px;">
+                <button id="tunaiButton">Tunai</button>
+                <button id="nonTunaiButton">Non Tunai</button>
+            </div>
+
+            <p id="waitingMessage" style="display:none; color:green; margin-top:10px;">
+                Silakan tunggu Konfirmasi Admin...
+            </p>    
+        </div>       
             @else
-                <div class="container">
-                    <h1>Tidak ada Tagihan</h1>
-                </div>
+                <p>Tidak ada tagihan yang harus dibayar.</p>
             @endif
-             
-        </div>
-    </section>
-    
-    
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const payButton = document.getElementById("payButton");
+        const paymentOptions = document.getElementById("paymentOptions");
+        const tunaiButton = document.getElementById("tunaiButton");
+        const nonTunaiButton = document.getElementById("nonTunaiButton");
+        const waitingMessage = document.getElementById("waitingMessage");
+
+        const tagihanId = {{ $dataTerakhir->id }};
+
+        payButton?.addEventListener("click", () => {
+            paymentOptions.style.display = "block";
+        });
+
+        function kirimMetode(method) {
+            fetch("{{ route('payment.method') }}", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "X-CSRF-TOKEN": "{{ csrf_token() }}"
+                },
+                body: JSON.stringify({ id: tagihanId, method: method })
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.success) {
+                    paymentOptions.style.display = "none";
+                    payButton.style.display = "none";
+                    waitingMessage.style.display = "block";
+                }
+            });
+        }
+
+        tunaiButton?.addEventListener("click", () => kirimMetode("Tunai"));
+        nonTunaiButton?.addEventListener("click", () => kirimMetode("Non Tunai"));
+    });
+</script>
 </body>
 </html>

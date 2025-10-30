@@ -43,6 +43,7 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/pay/{id}', [PaymentController::class, 'pay'])->name('payment.pay');
     Route::post('/midtrans/callback', [PaymentController::class, 'callback']);
+    Route::post('/payment/method', [PaymentController::class, 'storeMethod'])->name('payment.method');
 
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 });

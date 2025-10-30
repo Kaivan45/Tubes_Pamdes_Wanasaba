@@ -21,6 +21,7 @@ return new class extends Migration
             $table->date('tanggal')->nullable();
             $table->string('status')->default('Belum Lunas');
             $table->string('slug')->unique();
+            $table->string('metode_pembayaran')->default('Menunggu Konfirmasi');
             $table->timestamps();
         });
     }

@@ -18,3 +18,4 @@ meteranInput.addEventListener('input', function() {
   // Simpan nilai asli untuk form submit
   hargaHidden.value = totalHarga;
 });
+

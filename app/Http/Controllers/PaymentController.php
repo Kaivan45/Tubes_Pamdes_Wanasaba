@@ -1,11 +1,13 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Models\Transaksi;
 use Midtrans\Snap;
+use App\Models\Data;
 use Midtrans\Config;
 
+use App\Models\Transaksi;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class PaymentController extends Controller
 {
@@ -67,4 +69,22 @@ class PaymentController extends Controller
 
     return response()->json(['status' => 'Lunas']);
     }
+
+    public function storeMethod(Request $request)
+    {
+        $validated = $request->validate([
+            'id' => 'required|integer',
+            'method' => 'required|string'
+        ]);
+
+        $tagihan = Data::find($validated['id']);
+        if ($tagihan) {
+            $tagihan->metode_pembayaran = $validated['method'];
+            $tagihan->status = 'Menunggu Konfirmasi';
+            $tagihan->save();
+        }
+
+        return response()->json(['success' => true]);
+    }
+
 }

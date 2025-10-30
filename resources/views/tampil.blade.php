@@ -28,6 +28,7 @@
                 <th>Alamat</th>
                 <th>NO HP</th>
                 <th>Jatuh Tempo</th>
+                <th>Jenis Pembayaran</th>
                 <th>Status</th>
                 <th>Aksi</th>
             </tr>
@@ -40,6 +41,7 @@
                 <td>{{ $d->user->alamat }}</td>
                 <td>{{ $d->user->noHp }}</td>
                 <td>{{ $d->tanggal }}</td>
+                <td>{{ $d->metode_pembayaran }}</td>
                 <td>{{ $d->status }}</td>
                 <td style="display: flex; gap: 8px;">
                     <a href="/data/{{ $d->slug }}/edit" class="btn-edit">
