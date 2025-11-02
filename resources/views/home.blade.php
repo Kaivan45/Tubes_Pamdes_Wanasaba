@@ -51,7 +51,7 @@
                         <td>{{ $item->meteran }}</td>
                         <td>Rp. {{ number_format($item->harga, 0, ',', '.') }}</td>
                         <td>{{ $item->tanggal }}</td>
-                        <td>{{ $item->updated_at->format('d-m-Y') }}</td>
+                        <td>{{ $item->updated_at->format('Y-m-d') }}</td>
                         <td>{{ $item->status }}</td>
                     </tr>
                 @endforeach
