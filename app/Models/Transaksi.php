@@ -21,7 +21,7 @@ class Transaksi extends Model
         'totalbayar',
     ];
 
-    public function meteran()
+    public function data()
     {
         return $this->belongsTo(Data::class, 'id_meteran', 'id');
     }

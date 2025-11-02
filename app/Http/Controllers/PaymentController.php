@@ -7,6 +7,7 @@ use Midtrans\Config;
 
 use App\Models\Transaksi;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 
 class PaymentController extends Controller
@@ -19,57 +20,6 @@ class PaymentController extends Controller
         Config::$is3ds = config('midtrans.is_3ds');
     }
 
-    public function pay($id)
-    {
-        $transaksi = Transaksi::findOrFail($id);
-
-        $user = $transaksi->data->user;
-
-        $customerEmail = 'user' . $user->id . '@example.com';
-
-        $params = [
-            'transaction_details' => [
-                'order_id' => $transaksi->id,
-                'gross_amount' => intval($transaksi->data->harga),
-            ],
-            'customer_details' => [
-                'first_name' => $user->name ?? 'Pelanggan',
-                'email' => $customerEmail,
-            ]
-        ];
-
-        $snapToken = Snap::getSnapToken($params);
-
-        if (!$snapToken) {
-            dd('Snap token gagal dibuat', $params);
-        }
-
-        return view('payment.qris', compact('snapToken', 'transaksi'));
-    }
-
-    public function callback(Request $request)
-    {
-        $serverKey = config('midtrans.server_key');
-        $hashed = hash('sha512',
-        $request->order_id .
-        $request->status_code .
-        $request->gross_amount .
-        $serverKey
-    );
-
-    if ($hashed === $request->signature_key) {
-        $transaksi = Transaksi::find($request->order_id);
-
-        if ($request->transaction_status == 'settlement') {
-            $transaksi->status = 'Lunas';
-            $transaksi->tanggalbayar = now();
-            $transaksi->save();
-        }
-    }
-
-    return response()->json(['status' => 'Lunas']);
-    }
-
     public function storeMethod(Request $request)
     {
         $validated = $request->validate([
@@ -77,14 +27,109 @@ class PaymentController extends Controller
             'method' => 'required|string'
         ]);
 
+        // Ambil data meteran dari tabel data
         $tagihan = Data::find($validated['id']);
-        if ($tagihan) {
-            $tagihan->metode_pembayaran = $validated['method'];
-            $tagihan->status = 'Menunggu Konfirmasi';
-            $tagihan->save();
+        if (!$tagihan) {
+            return response()->json(['success' => false, 'message' => 'Data meteran tidak ditemukan.']);
+        }
+
+        // Update status dan metode di tabel data
+        $tagihan->metode_pembayaran = $validated['method'];
+        $tagihan->status = $validated['method'] === 'Tunai' ? 'Menunggu Konfirmasi' : 'Menunggu Pembayaran';
+        $tagihan->save();
+
+        // Buat entri baru di tabel transaksis
+        $transaksi = new Transaksi();
+        $transaksi->id_meteran = $tagihan->id;
+        $transaksi->status = $tagihan->status;
+        $transaksi->totalbayar = $tagihan->harga; // ambil total dari harga di data
+        $transaksi->save();
+
+        // Jika Non Tunai, redirect ke Midtrans
+        if ($validated['method'] === 'Non Tunai') {
+            return response()->json([
+                'success' => true,
+                'redirect' => route('payment.pay', ['id' => $transaksi->id])
+            ]);
         }
 
         return response()->json(['success' => true]);
+    }
+
+    // === Proses Midtrans ===
+    public function pay($id)
+    {
+        $transaksi = Transaksi::findOrFail($id);
+        $dataMeteran = $transaksi->data; // relasi ke tabel data
+        $user = $dataMeteran->user; // relasi user dari data
+
+        $params = [
+            'transaction_details' => [
+                'order_id' => $transaksi->id,
+                'gross_amount' => intval($transaksi->totalbayar),
+            ],
+            'customer_details' => [
+                'first_name' => $user->name ?? 'Pelanggan',
+                'email' => 'user' . $user->id . '@example.com',
+            ],
+        ];
+
+        $snapToken = Snap::getSnapToken($params);
+
+        return view('payment.qris', compact('snapToken', 'transaksi'));
+    }
+
+    // === Callback Midtrans ===
+    public function callback(Request $request)
+    {
+        Log::info('=== MIDTRANS CALLBACK DITERIMA ===', $request->all());
+        $serverKey = config('midtrans.server_key');
+        $hashed = hash('sha512',
+        $request->order_id .
+        $request->status_code .
+        $request->gross_amount .
+        $serverKey
+        );
+
+        if ($hashed !== $request->signature_key) {
+            return response()->json(['message' => 'Invalid signature'], 403);
+        }
+
+        $transaksi = Transaksi::find($request->order_id);
+
+        if (!$transaksi) {
+            return response()->json(['message' => 'Transaksi tidak ditemukan'], 404);
+        }
+
+        // Ambil data terkait
+        $data = $transaksi->data;
+
+        switch ($request->transaction_status) {
+            case 'capture':
+            case 'settlement':
+                $transaksi->status = 'Lunas';
+                $transaksi->tanggalbayar = now();
+                $data->status = 'Lunas';
+                break;
+
+            case 'pending':
+                $transaksi->status = 'Menunggu Pembayaran';
+                $data->status = 'Menunggu Pembayaran';
+                break;
+
+            case 'deny':
+            case 'expire':
+            case 'cancel':
+                $transaksi->status = 'Gagal';
+                $data->status = 'Gagal';
+                break;
+        }
+
+        $transaksi->save();
+        $data->save();
+        
+
+        return response()->json(['message' => 'Callback processed successfully']);
     }
 
 }

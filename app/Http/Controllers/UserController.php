@@ -64,7 +64,7 @@ class UserController extends Controller
         //     'slug' => $user->id . uniqid(),
         // ]);
 
-        return redirect('/haltambah')->with('success', 'Data berhasil ditambahkan!');
+        return redirect('/datauser')->with('success', 'Data berhasil ditambahkan!');
     }
 
     /**

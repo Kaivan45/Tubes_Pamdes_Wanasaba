@@ -32,7 +32,7 @@
         <input type="date" name="tanggal" id="tanggal" placeholder="Tanggal" required/>
 
         <label for="meteran">Input meteran</label>
-        <input type="number" name="meteran" id="meteran" placeholder="Masukkan meter" required/>
+        <input type="number" name="meteran" id="meteran" step="any" min="0" placeholder="Masukkan meter" required/>
         
         <label for="harga">Harga</label>
         <input type="text" id="hargaDisplay" readonly/>
