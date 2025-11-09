@@ -35,12 +35,12 @@ class UserController extends Controller
         $validated = $request->validate([
             'name' => 'required',
             'username' => 'required|unique:users',
-            'password' => 'required|min:5',
+            'password' => 'required|min:5|confirmed',
             'alamat' => 'required',
             'noHp' => 'required',
         ],
         [
-       
+            'password.confirmed' => 'Konfirmasi password tidak cocok.',
             'name.required' => 'Nama wajib diisi.',
             'username.required' => 'Username wajib diisi.',
             'username.unique' => 'Username sudah digunakan, silakan pilih yang lain.',
@@ -54,15 +54,6 @@ class UserController extends Controller
         $validated['role'] = 'pelanggan';
 
         $user = User::create($validated);
-
-        // Data::create([
-        //     'user_id' => $user->id,         
-        //     'meteran' => 0,                 
-        //     'harga' => 0,                   
-        //     'tanggal' => now(),             
-        //     'status' => 'Belum Lunas',
-        //     'slug' => $user->id . uniqid(),
-        // ]);
 
         return redirect('/datauser')->with('success', 'Data berhasil ditambahkan!');
     }

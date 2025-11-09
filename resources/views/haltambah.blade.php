@@ -29,6 +29,9 @@
         <label for="password">Password</label>
         <input type="password" id="password" name="password" placeholder="Masukkan password" required />
 
+        <label for="password_confirmation">Konfirmasi Password</label>
+        <input type="password" id="password_confirmation" name="password_confirmation" placeholder="Masukkan ulang password" required />
+
         <label for="alamat">Alamat</label>
         <input type="text" id="alamat" name="alamat" placeholder="Masukkan alamat" required />
 
