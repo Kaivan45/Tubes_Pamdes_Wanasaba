@@ -37,8 +37,10 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/data/create/{username}', [DataController::class, 'create'])->name('data.create');
     Route::post('/data/store', [DataController::class, 'store2'])->name('data.store2');
     Route::delete('/users/{username}', [DataController::class, 'destroy2'])->name('data.destroy2');
+    Route::delete('/data/{data:slug}', [DataController::class, 'destroy'])->name('data.destroy');
 
     Route::resource('users', UserController::class);
+    
 
     Route::get('/pay/{id}', [PaymentController::class, 'pay'])->name('payment.pay');
     
