@@ -1,9 +1,9 @@
 {
   "build": {
     "builder": "NIXPACKS",
-    "buildCommand": "composer install && php artisan migrate --force"
+    "buildCommand": "cp .env.example .env && composer install && php artisan key:generate"
   },
   "deploy": {
-    "startCommand": "php artisan serve --host=0.0.0.0 --port=8080"
+    "startCommand": "php artisan migrate --force && php artisan serve --host=0.0.0.0 --port=8080"
   }
 }
