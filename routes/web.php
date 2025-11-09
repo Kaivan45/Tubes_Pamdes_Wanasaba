@@ -34,7 +34,7 @@ Route::middleware(['auth'])->group(function () {
     Route::put('/data/{data:slug}', [DataController::class, 'update'])->name('data.update');
     Route::get('/data/{data:slug}', [DataController::class, 'show'])->name('data.show');
     Route::get('/datauser', [DataController::class, 'index'])->name('data.user');
-    Route::get('/data/create/{username}', [DataController::class, 'create'])->name('data.create');
+    Route::get('/data/create/{username}', [DataController::class, 'create'])->name('data.create.data');
     Route::post('/data/store', [DataController::class, 'store2'])->name('data.store2');
     Route::delete('/users/{username}', [DataController::class, 'destroy2'])->name('data.destroy2');
 
