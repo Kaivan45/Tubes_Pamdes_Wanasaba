@@ -27,10 +27,20 @@
         <input type="text" id="username" name="username" placeholder="Masukkan username" required />
 
         <label for="password">Password</label>
-        <input type="password" id="password" name="password" placeholder="Masukkan password" required />
+        <div style="position: relative;">
+                <input type="password" id="password" name="password" placeholder="Masukkan password" required />
+                <span class="togglePassword" data-target="password" style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); cursor: pointer;">
+                    👁️
+                </span>
+        </div>
 
         <label for="password_confirmation">Konfirmasi Password</label>
-        <input type="password" id="password_confirmation" name="password_confirmation" placeholder="Masukkan ulang password" required />
+        <div style="position: relative;">
+            <input type="password" id="password_confirmation" name="password_confirmation" placeholder="Masukkan password lagi" required />
+            <span class="togglePassword" data-target="password_confirmation" style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); cursor: pointer;">
+                👁️
+            </span>
+        </div>
 
         <label for="alamat">Alamat</label>
         <input type="text" id="alamat" name="alamat" placeholder="Masukkan alamat" required />
@@ -40,4 +50,16 @@
 
         <button type="submit">Submit</button>
     </form>
+    <script>
+        const toggles = document.querySelectorAll('.togglePassword');
+
+        toggles.forEach(toggle => {
+            toggle.addEventListener('click', () => {
+                const targetId = toggle.getAttribute('data-target');
+                const input = document.getElementById(targetId);
+                const type = input.getAttribute('type') === 'password' ? 'text' : 'password';
+                input.setAttribute('type', type);
+            });
+        });
+    </script>
 </x-layout>

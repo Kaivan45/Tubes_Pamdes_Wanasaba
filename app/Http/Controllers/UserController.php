@@ -40,7 +40,7 @@ class UserController extends Controller
             'noHp' => 'required',
         ],
         [
-            'password.confirmed' => 'Konfirmasi password tidak cocok.',
+            'password.confirmed' => 'Password tidak cocok.',
             'name.required' => 'Nama wajib diisi.',
             'username.required' => 'Username wajib diisi.',
             'username.unique' => 'Username sudah digunakan, silakan pilih yang lain.',
