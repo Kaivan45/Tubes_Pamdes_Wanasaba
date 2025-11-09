@@ -26,18 +26,18 @@
         <label for="username">Username</label>
         <input type="text" id="username" name="username" placeholder="Masukkan username" required />
 
-        <label for="password">Password</label>
-        <div style="position: relative;">
-                <input type="password" id="password" name="password" placeholder="Masukkan password" required />
-                <span class="togglePassword" data-target="password" style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); cursor: pointer;">
-                    👁️
-                </span>
+       <label for="password">Password</label>
+        <div style="position: relative; display: flex; align-items: center;">
+            <input type="password" id="password" name="password" placeholder="Masukkan password" required style="flex: 1; padding-right: 2rem;" />
+            <span class="togglePassword" data-target="password" style="position: absolute; right: 10px; cursor: pointer;">
+                👁️
+            </span>
         </div>
 
         <label for="password_confirmation">Konfirmasi Password</label>
-        <div style="position: relative;">
-            <input type="password" id="password_confirmation" name="password_confirmation" placeholder="Masukkan password lagi" required />
-            <span class="togglePassword" data-target="password_confirmation" style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); cursor: pointer;">
+        <div style="position: relative; display: flex; align-items: center;">
+            <input type="password" id="password_confirmation" name="password_confirmation" placeholder="Masukkan password lagi" required style="flex: 1; padding-right: 2rem;" />
+            <span class="togglePassword" data-target="password_confirmation" style="position: absolute; right: 10px; cursor: pointer;">
                 👁️
             </span>
         </div>
