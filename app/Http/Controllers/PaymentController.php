@@ -6,6 +6,7 @@ use App\Models\Data;
 use Midtrans\Config;
 
 use App\Models\Transaksi;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
@@ -63,9 +64,11 @@ class PaymentController extends Controller
         $dataMeteran = $transaksi->data; // relasi ke tabel data
         $user = $dataMeteran->user; // relasi user dari data
 
+        $orderId = $transaksi->id . '-' . Str::random(6);
+
         $params = [
             'transaction_details' => [
-                'order_id' => $transaksi->id,
+                'order_id' => $orderId,
                 'gross_amount' => intval($transaksi->totalbayar),
             ],
             'customer_details' => [
