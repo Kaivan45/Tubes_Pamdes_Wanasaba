@@ -27,6 +27,7 @@
                 <th>Nama</th>
                 <th>Alamat</th>
                 <th>NO HP</th>
+                <th>Harga</th>
                 <th>Jatuh Tempo</th>
                 <th>Jenis Pembayaran</th>
                 <th>Status</th>
@@ -40,6 +41,7 @@
                 <td>{{ $d->user->name }}</td>
                 <td>{{ $d->user->alamat }}</td>
                 <td>{{ $d->user->noHp }}</td>
+                <td>Rp. {{ number_format($d->harga, 0, ',', '.') }}</td>
                 <td>{{ $d->tanggal }}</td>
                 <td>{{ $d->metode_pembayaran }}</td>
                 <td>{{ $d->status }}</td>
