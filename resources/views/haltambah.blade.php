@@ -48,7 +48,7 @@
         <input type="text" id="alamat" name="alamat" placeholder="Masukkan alamat" required />
 
         <label for="telepon">No Telepon</label>
-        <input type="text" id="telepon" name="noHp" placeholder="Masukkan nomor telepon" required />
+        <input type="text" id="telepon" name="noHp" placeholder="Masukkan nomor telepon" required oninput="this.value = this.value.replace(/[^0-9]/g, '');"/>
 
         <button type="submit">Submit</button>
     </form>

@@ -7,6 +7,7 @@ use App\Models\User;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
@@ -16,20 +17,31 @@ class UserController extends Controller
      */
     public function index()
     {
-        //
+        $userId = Auth::id();
+
+        // Ambil data terakhir
+        $dataTerakhir = Data::where('user_id', $userId)
+                            ->latest()
+                            ->first();
+
+        // Query semua data
+        $dataSemuaQuery = Data::where('user_id', $userId)
+                              ->orderBy('created_at', 'desc');
+
+        // Jika data terakhir ada dan belum lunas, jangan tampilkan di dataSemua
+        if ($dataTerakhir && $dataTerakhir->status !== 'Lunas') {
+            $dataSemuaQuery->where('id', '!=', $dataTerakhir->id);
+        }
+
+        $dataSemua = $dataSemuaQuery->get();
+
+        return view('home', [
+            'title' => 'Dashboard Pelanggan',
+            'dataTerakhir' => $dataTerakhir,
+            'dataSemua' => $dataSemua
+        ]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
         $validated = $request->validate([
@@ -58,36 +70,12 @@ class UserController extends Controller
         return redirect('/datauser')->with('success', 'Data berhasil ditambahkan!');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
+    public function destroy($username)
     {
-        //
-    }
+        $user = User::where('username', $username)->first();
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
+        $user->delete();
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(User $user)
-    {
-        // $user->delete();
-        // return redirect('/tampil')->with('success', 'User berhasil dihapus!');
+        return redirect()->back()->with('success', 'User berhasil dihapus.');
     }
 }

@@ -21,6 +21,7 @@ class Transaksi extends Model
         'totalbayar',
     ];
 
+    // Relasi ke model Data
     public function data()
     {
         return $this->belongsTo(Data::class, 'id_meteran', 'id');

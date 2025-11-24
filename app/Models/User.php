@@ -49,16 +49,19 @@ class User extends Authenticatable
         ];
     }
 
+    // Relasi ke model Data
     public function data()
     {
         return $this->hasMany(Data::class, 'user_id');
     }
 
+    // Fungsi untuk menghitung total user dengan role 'pelanggan'
     public static function totalRegularUsers()
     {
         return self::where('role', 'pelanggan')->count();
     }
 
+    // Override getRouteKeyName untuk menggunakan username sebagai route key
     public function getRouteKeyName()
     {
         return 'username';
