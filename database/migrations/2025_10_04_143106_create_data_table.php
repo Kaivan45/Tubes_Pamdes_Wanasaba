@@ -14,8 +14,8 @@ return new class extends Migration
         Schema::create('data', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')
-                    ->constrained('users', 'id')
-                    ->onDelete('cascade');
+                ->constrained('users', 'id')
+                ->onDelete('cascade');
             $table->integer('meteran')->nullable();
             $table->decimal('harga', 10, 2)->nullable();
             $table->date('tanggal')->nullable();

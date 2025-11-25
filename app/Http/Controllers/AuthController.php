@@ -7,7 +7,11 @@ use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
-    public function login(Request $request)
+   /**
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function login(Request $request): \Illuminate\Http\RedirectResponse // Tambahkan return type
     {
         $credentials = $request->validate([
             'username' => 'required',
@@ -17,11 +21,18 @@ class AuthController extends Controller
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
 
-            if (Auth::user()->role === 'admin') {
-                return redirect('/'); 
-            } else {
-                return redirect('/pelanggan');
+            // Lakukan pengecekan NULL pada Auth::user()
+            $user = Auth::user();
+
+            if ($user !== null) { // Pengecekan eksplisit untuk User model
+                if ($user->role === 'admin') {
+                    return redirect('/');
+                } else {
+                    return redirect('/pelanggan');
+                }
             }
+            // Walaupun tidak mungkin sampai di sini jika Auth::attempt berhasil,
+            // secara teknis tetap perlu ditangani jika Auth::user() mengembalikan null.
         }
 
         return back()->withErrors([
@@ -29,7 +40,11 @@ class AuthController extends Controller
         ]);
     }
 
-    public function logout(Request $request)
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function logout(Request $request): \Illuminate\Http\RedirectResponse // Tambahkan return type
     {
         Auth::logout();
         $request->session()->invalidate();

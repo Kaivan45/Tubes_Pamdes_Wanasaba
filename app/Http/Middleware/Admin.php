@@ -16,8 +16,10 @@ class Admin
      */
     public function handle(Request $request, Closure $next): Response
     {
-        // Cek apakah user sudah login dan memiliki role 'admin'
-        if (Auth::check() && Auth::user()->role === 'admin') {
+        /** @var \App\Models\User|null $user */
+        $user = Auth::user();
+
+        if ($user !== null && $user->role === 'admin') {
             return $next($request);
         }
 

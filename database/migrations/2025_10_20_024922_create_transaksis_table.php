@@ -14,10 +14,10 @@ return new class extends Migration
         Schema::create('transaksis', function (Blueprint $table) {
             $table->id();
             $table->foreignId('id_meteran')
-                  ->constrained('data')
-                  ->onDelete('cascade'); 
+                ->constrained('data')
+                ->onDelete('cascade');
             $table->string('status')->default('pending');
-            $table->date('tanggalbayar')->nullable(); 
+            $table->date('tanggalbayar')->nullable();
             $table->decimal('totalbayar', 15, 2);
             $table->timestamps();
         });

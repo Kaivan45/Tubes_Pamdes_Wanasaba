@@ -2,18 +2,24 @@
 
 namespace App\Models;
 
-use App\Models\Data;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
+/**
+ * @property int $id_meteran
+ * @property int $totalbayar
+ * @property string $status
+ * @property string|null $tanggalbayar
+ */
 class Transaksi extends Model
 {
+    /** @use HasFactory<Factory<self>> */
     use HasFactory;
 
-    // Nama tabel (optional kalau sudah sesuai konvensi)
     protected $table = 'transaksis';
 
-    // Kolom yang boleh diisi secara massal
     protected $fillable = [
         'id_meteran',
         'status',
@@ -21,11 +27,17 @@ class Transaksi extends Model
         'totalbayar',
     ];
 
-    // Relasi ke model Data
-    public function data()
+    /**
+     * Relasi ke model Data.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Data, \App\Models\Transaksi>
+     */
+    public function data(): BelongsTo
     {
-        return $this->belongsTo(Data::class, 'id_meteran', 'id');
+        /** @var \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Data, \App\Models\Transaksi> $relation */
+        $relation = $this->belongsTo(Data::class, 'id_meteran', 'id');
+
+        return $relation;
     }
+
 }
-
-

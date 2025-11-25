@@ -2,19 +2,18 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class User extends Authenticatable
 {
-    /** @use HasFactory<\Database\Factories\UserFactory> */
+    /** @use HasFactory<Factory<self>> */
     use HasFactory, Notifiable;
 
     /**
-     * The attributes that are mass assignable.
-     *
      * @var list<string>
      */
     protected $fillable = [
@@ -27,8 +26,6 @@ class User extends Authenticatable
     ];
 
     /**
-     * The attributes that should be hidden for serialization.
-     *
      * @var list<string>
      */
     protected $hidden = [
@@ -37,8 +34,6 @@ class User extends Authenticatable
     ];
 
     /**
-     * Get the attributes that should be cast.
-     *
      * @return array<string, string>
      */
     protected function casts(): array
@@ -49,20 +44,36 @@ class User extends Authenticatable
         ];
     }
 
-    // Relasi ke model Data
-    public function data()
+    /**
+     * Relasi ke model Data
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\Data, \App\Models\User>
+     */
+    public function data(): HasMany
     {
-        return $this->hasMany(Data::class, 'user_id');
+        /** @var \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\Data, \App\Models\User> $relation */
+        $relation = $this->hasMany(Data::class, 'user_id');
+
+        return $relation;
     }
 
-    // Fungsi untuk menghitung total user dengan role 'pelanggan'
-    public static function totalRegularUsers()
+
+    /**
+     * Menghitung total user dengan role 'pelanggan'
+     *
+     * @return int
+     */
+    public static function totalRegularUsers(): int
     {
         return self::where('role', 'pelanggan')->count();
     }
 
-    // Override getRouteKeyName untuk menggunakan username sebagai route key
-    public function getRouteKeyName()
+    /**
+     * Gunakan username sebagai route key
+     *
+     * @return string
+     */
+    public function getRouteKeyName(): string
     {
         return 'username';
     }

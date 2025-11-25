@@ -1,20 +1,20 @@
 <?php
 
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\DataController;
+use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\UserController;
 use App\Models\Data;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\AuthController;
-use App\Http\Controllers\DataController;
-use App\Http\Controllers\UserController;
-use App\Http\Controllers\PaymentController;
-use App\Http\Controllers\PelangganController;
 
 Route::middleware(['auth'])->group(function () {
 
     Route::get('/', function () {
-        if(Auth::user()->role == 'admin'){
+        if (Auth::user()->role == 'admin') {
             $jumlahUser = User::totalRegularUsers();
+
             return view('haladmin', ['title' => 'Dashboard Admin', 'jumlahUser' => $jumlahUser]);
         } else {
             return redirect('/pelanggan');
@@ -24,11 +24,11 @@ Route::middleware(['auth'])->group(function () {
     /* ------------------ ROUTE KHUSUS ADMIN ------------------ */
     Route::middleware(['admin'])->group(function () {
 
-        Route::get('/haltambah', fn() => view('haltambah', ['title' => 'Tambah Data']));
+        Route::get('/haltambah', fn () => view('haltambah', ['title' => 'Tambah Data']));
 
-        Route::get('/tampil', fn() => view('tampil', [
+        Route::get('/tampil', fn () => view('tampil', [
             'title' => 'Tampil Data',
-            'data' => Data::with('user')->filter()->belumLunasFirst()->simplePaginate(10)->withQueryString()
+            'data' => Data::with('user')->filter()->belumLunasFirst()->simplePaginate(10)->withQueryString(),
         ]));
 
         Route::post('/data/store', [DataController::class, 'store'])->name('data.store');
@@ -53,7 +53,6 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 });
 
-
-Route::get('/login', fn() => view('login'))->name('login');
+Route::get('/login', fn () => view('login'))->name('login');
 
 Route::post('/login', [AuthController::class, 'login'])->name('login.post');

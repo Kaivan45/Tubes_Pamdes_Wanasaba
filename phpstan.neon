@@ -1,0 +1,10 @@
+includes:
+    - vendor/larastan/larastan/extension.neon
+
+parameters:
+    paths:
+        - app/
+
+    # Level 0 paling santai, lv 9 paling ketat
+    # untuk pemula/proyek lama, mulai dari 0 atau 1
+    level: 9

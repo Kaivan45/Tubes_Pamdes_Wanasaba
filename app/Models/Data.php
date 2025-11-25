@@ -2,69 +2,124 @@
 
 namespace App\Models;
 
-use App\Models\User;
-use Illuminate\Support\Str;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Support\Facades\DB;
 
+/**
+ * @property int $user_id
+ * @property string $meteran
+ * @property string $harga
+ * @property string $tanggal
+ * @property string $status
+ * @property string $slug
+ *
+ * @mixin Builder<Data>
+ */
 class Data extends Model
 {
+    /** @use HasFactory<Factory<self>> */
     use HasFactory;
 
     protected $table = 'data';
-    protected $fillable = ['user_id', 'meteran', 'harga', 'tanggal', 'status', 'slug'];
+
+    protected $fillable = [
+        'user_id',
+        'meteran',
+        'harga',
+        'tanggal',
+        'status',
+        'slug',
+    ];
+
     protected $with = ['user'];
 
-    // Relasi ke model User
-    public function user()
+    /**
+     * Relasi ke User.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\User, \App\Models\Data>
+     */
+    public function user(): BelongsTo
     {
-        return $this->belongsTo(User::class);
+        /** @var \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\User, \App\Models\Data> $relation */
+        $relation = $this->belongsTo(User::class, 'user_id', 'id');
+
+        return $relation;
     }
 
-    // Boot method untuk model
-    protected static function booted()
+    /**
+     * Membuat slug otomatis
+     */
+    protected static function booted(): void
     {
-        static::creating(function ($data) {
-            // Jika belum ada slug, buat otomatis
+        static::creating(function (Data $data): void {
             if (empty($data->slug)) {
                 $data->slug = $data->user_id . uniqid();
             }
         });
     }
-    // Fungsi scope untuk filter pencarian
+
+    /**
+     * Scope filter pencarian.
+     *
+     * @param Builder<Data> $query
+     * @return Builder<Data>
+     */
     public function scopeFilter(Builder $query): Builder
     {
-        if ($search = request('search')) {
-            $query->whereHas('user', function ($q) use ($search) {
-            $q->where('name', 'like', "%$search%")
-              ->orWhere('alamat', 'like', "%$search%")
-              ->orWhere('noHp', 'like', "%$search%");
+        $search = request('search');
+
+        if (is_string($search) && strlen($search) > 0) {
+            $query->whereHas('user', function (Builder $q) use ($search): void {
+                $q->where('name', 'like', "%{$search}%")
+                    ->orWhere('alamat', 'like', "%{$search}%")
+                    ->orWhere('noHp', 'like', "%{$search}%");
             });
         }
 
         return $query;
     }
 
-    // Fungsi scope untuk mendapatkan data terakhir per user
-    public function scopeLastPerUser($query)
+    /**
+     * Scope: data terakhir per user
+     *
+     * @param Builder<Data> $query
+     * @return Builder<Data>
+     */
+    public function scopeLastPerUser(Builder $query): Builder
     {
         return $query->select('data.*')
-            ->join(DB::raw('(SELECT MAX(id) as id FROM data GROUP BY user_id) as latest'), 'data.id', '=', 'latest.id');
+            ->join(
+                DB::raw('(SELECT MAX(id) as id FROM data GROUP BY user_id) as latest'),
+                'data.id',
+                '=',
+                'latest.id'
+            );
     }
 
-    // Fungsi scope untuk mengurutkan data dengan status 'Belum Lunas' di atas
-    public function scopeBelumLunasFirst($query)
+    /**
+     * Scope: Belum Lunas diurutkan pertama
+     *
+     * @param Builder<Data> $query
+     * @return Builder<Data>
+     */
+    public function scopeBelumLunasFirst(Builder $query): Builder
     {
-        return $query->orderByRaw("CASE WHEN status = 'Belum Lunas' THEN 1 ELSE 2 END")
-                    ->latest();
+        return $query
+            ->orderByRaw("CASE WHEN status = 'Belum Lunas' THEN 1 ELSE 2 END")
+            ->latest();
     }
 
-    // Override getRouteKeyName untuk menggunakan slug sebagai route key
-    public function getRouteKeyName()
+    /**
+     * Gunakan slug sebagai route model binding.
+     *
+     * @return string
+     */
+    public function getRouteKeyName(): string
     {
         return 'slug';
     }
 }
-

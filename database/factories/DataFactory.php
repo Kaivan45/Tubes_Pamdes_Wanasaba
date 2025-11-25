@@ -2,7 +2,6 @@
 
 namespace Database\Factories;
 
-use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -28,7 +27,7 @@ class DataFactory extends Factory
             'harga' => $meteran * $hargaPerMeter,
             'tanggal' => fake()->date(),
             'status' => fake()->randomElement(['Lunas', 'Belum Lunas']),
-            'slug' => $userId . uniqid(),
+            'slug' => $userId.uniqid(),
             'created_at' => now(),
             'updated_at' => now(),
         ];
