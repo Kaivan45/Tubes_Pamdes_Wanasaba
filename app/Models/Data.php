@@ -76,6 +76,8 @@ class Data extends Model
             $query->whereHas('user', function (Builder $q) use ($search): void {
                 $q->where('name', 'like', "%{$search}%")
                     ->orWhere('alamat', 'like', "%{$search}%")
+                    ->orWhere('status', 'like', "%{$search}%")
+                    ->orWhere('metode_pembayaran', 'like', "%{$search}%")
                     ->orWhere('noHp', 'like', "%{$search}%");
             });
         }

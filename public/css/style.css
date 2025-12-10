@@ -6,6 +6,12 @@
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
+header {
+  position: sticky; 
+  top: 0;
+  z-index: 9999;  
+}
+
 a {
   text-decoration: none;
 }
@@ -338,7 +344,6 @@ table th {
   height: 180px;
   text-align: center;
   box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-  margin-left: 80px;
 
   display: flex;            /* Flex untuk centering */
   flex-direction: column;   /* Susun vertikal */
@@ -357,6 +362,36 @@ table th {
   font-weight: bold;
   color: #333;
 }
+
+.dashboard-row {
+    display: flex;
+    gap: 20px;
+    align-items: stretch;
+    margin: 30px 80px;
+}
+
+/* Card Jumlah User */
+.user-card {
+    width: 300px;
+    min-width: 260px;
+}
+
+/* Chart */
+.chart-card {
+    flex: 1; /* 🔥 ambil sisa ruang */
+    background: #fff;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+/* Wrapper canvas */
+.chart-wrapper {
+    width: 100%;
+    height: 320px; /* bisa 350/400 */
+}
+
+
 
 
 
@@ -389,6 +424,24 @@ table th {
     padding: 12px 15px;
     display: block;
   }
+   nav ul li form {
+    width: 100%;
+  }
+
+  nav ul li form button {
+    width: 100%;
+    text-align: left;
+    padding: 12px 15px;
+    background: none;
+    border: none;
+    color: white;
+    font-weight: 700;
+    cursor: pointer;
+  }
+
+  nav ul li form button:hover {
+    color: #ffd166;
+  }
 
   .menu-toggle {
     display: block; 
@@ -398,6 +451,7 @@ table th {
     max-width: 100%; 
     padding: 20px;
   }
+  
 }
 
 /* Animasi dropdown */
@@ -410,4 +464,210 @@ table th {
     opacity: 1;
     transform: translateY(0);
   }
+}
+
+
+/* ========== RESPONSIVE MOBILE (HP) ========== */
+@media (max-width: 480px) {
+
+  /* HEADER */
+  header {
+    padding: 12px 15px;
+  }
+
+  header h3 {
+    font-size: 16px;
+  }
+
+  /* NAV */
+  nav ul {
+    top: 45px;
+    width: 200px;
+  }
+
+  nav ul li a,
+  nav ul li button {
+    font-size: 14px;
+  }
+
+  .menu-toggle {
+    font-size: 22px;
+  }
+
+  /* SECTION */
+  section {
+    margin: 15px auto;
+    padding: 15px;
+  }
+
+  section h1 {
+    font-size: 20px;
+  }
+
+  /* FORM */
+  .tambah {
+    max-width: 100%;
+    padding: 15px;
+  }
+
+  .tambah label {
+    width: 100%;
+    font-size: 14px;
+  }
+
+  .tambah input,
+  .tambah select {
+    font-size: 14px;
+    padding: 8px;
+  }
+
+  .tambah button {
+    font-size: 14px;
+    padding: 10px;
+  }
+
+  /* SEARCH */
+  .search-form {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+  }
+
+  .search-form input {
+    width: 100%;
+  }
+
+  .search-form button {
+    width: 100%;
+  }
+
+  /* TABEL RESPONSIVE */
+  table {
+    font-size: 13px;
+  }
+
+  table th, table td {
+    padding: 8px;
+  }
+
+  /* Scroll horizontal tabel */
+  .table-wrapper {
+    overflow-x: auto;
+  }
+
+  /* BUTTON TABLE */
+  .btn-edit,
+  .btn-hapus {
+    padding: 5px 8px;
+    font-size: 12px;
+  }
+
+  /* LOGIN */
+  .login-container {
+    max-width: 90%;
+    margin: 50px auto;
+    padding: 20px;
+  }
+
+  .login-container h2 {
+    font-size: 20px;
+  }
+
+  /* CARD DASHBOARD */
+  .card {
+    width: 90%;
+    height: auto;
+    margin: 15px auto;
+    padding: 20px;
+  }
+
+  .card h4 {
+    font-size: 18px;
+  }
+
+  .card .count {
+    font-size: 26px;
+  }
+
+  /* SAMBUT */
+  .sambut {
+    font-size: 24px;
+    margin-top: 25px;
+  }
+
+  /* PAGINATION */
+  .pagination {
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .pagination li a,
+  .pagination li span {
+    padding: 5px 10px;
+    font-size: 13px;
+  }
+  .data-table thead {
+    display: none;
+  }
+
+  .data-table,
+  .data-table tbody,
+  .data-table tr,
+  .data-table td {
+    display: block;
+    width: 100%;
+  }
+
+  .data-table tr {
+    margin-bottom: 15px;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    padding: 10px;
+  }
+
+  .data-table td {
+    text-align: left;
+    padding: 6px 8px;
+    position: relative;
+  }
+
+  .data-table td::before {
+    font-weight: bold;
+    color: #0077b6;
+    display: block;
+    margin-bottom: 2px;
+  }
+
+  /* Label manual */
+  .data-table td:nth-child(1)::before { content: "No"; }
+  .data-table td:nth-child(2)::before { content: "Nama"; }
+  .data-table td:nth-child(3)::before { content: "Alamat"; }
+  .data-table td:nth-child(4)::before { content: "No HP"; }
+  .data-table td:nth-child(5)::before { content: "Harga"; }
+  .data-table td:nth-child(6)::before { content: "Jatuh Tempo"; }
+  .data-table td:nth-child(7)::before { content: "Pembayaran"; }
+  .data-table td:nth-child(8)::before { content: "Status"; }
+  .data-table td:nth-child(9)::before { content: "Aksi"; }
+
+  /* tombol aksi rata */
+  .data-table td:last-child {
+    display: flex;
+    gap: 10px;
+    margin-top: 8px;
+  }
+  .dashboard-row {
+    flex-direction: column;   /* 🔥 bikin ke bawah */
+    margin: 20px;
+  }
+
+  .user-card,
+  .chart-card {
+    width: 100%;
+  }
+
+  .chart-wrapper {
+    height: 260px;
+  }
+  
 }

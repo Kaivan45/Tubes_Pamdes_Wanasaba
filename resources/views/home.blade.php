@@ -13,6 +13,7 @@
         <div class="logo">
             <h3><a class="logoL" href="/">{{ Auth::user()->name }}</a></h3>
         </div>
+         <button class="menu-toggle" onclick="toggleMenu()">☰</button>
         <nav>
             <ul id="menu">
                 <li><a href="https://wa.me/6289512996464">Contact Us</a></li>
@@ -27,13 +28,13 @@
     </header>
 
     <section>
-         @if ($dataSemua && $dataSemua->isNotEmpty())
+        @if ($dataSemua && $dataSemua->isNotEmpty())
         <div class="container">
             <h1>History</h1>
         </div>
 
        
-           <table border="1" class="table">
+           <table border="1" class="responsive-table">
             <thead>
                 <tr>
                     <th>No</th>
@@ -47,16 +48,29 @@
             <tbody>
                 @foreach ($dataSemua as $item)
                     <tr>
-                        <td>{{ $loop->iteration }}</td>
-                        <td>{{ $item->meteran }}</td>
-                        <td>Rp. {{ number_format($item->harga, 0, ',', '.') }}</td>
-                        <td>{{ $item->tanggal }}</td>
-                        <td>{{ $item->updated_at->format('Y-m-d') }}</td>
-                        <td>{{ $item->status }}</td>
+                        <td data-label="No">{{ $dataSemua->firstItem() + $loop->index }}</td>
+                        <td data-label="Jumlah Meteran">{{ $item->meteran }}</td>
+                        <td data-label="Harga">
+                            Rp {{ number_format($item->harga,0,',','.') }}
+                        </td>
+                        <td data-label="Jatuh Tempo">{{ $item->tanggal }}</td>
+                        <td data-label="Tanggal Bayar">
+                            {{ $item->updated_at->format('Y-m-d') }}
+                        </td>
+                        <td data-label="Status">{{ $item->status }}</td>
                     </tr>
                 @endforeach
             </tbody>
-        </table>    
+        </table>
+        <div style="margin-top:20px">
+            {{ $dataSemua->links() }}
+        </div>
+        @else
+             <div class="empty-state">
+                <div class="empty-icon">📄</div>
+                <h2>Belum Ada Riwayat</h2>
+                <p>Transaksi pembayaran kamu akan tampil di sini.</p>
+            </div>
         @endif
 
         
@@ -65,33 +79,65 @@
 
         {{-- Bagian Tagihan Terakhir --}}
         @if ($dataTerakhir && $dataTerakhir->status !== 'Lunas')
-            <div class="container">
-                <h1>Tagihan</h1>
-            </div>
+            <div class="billing-card">
+                    <div class="billing-header">
+                        <h2>Tagihan Bulan Ini</h2>
+                        <span class="billing-status {{ $dataTerakhir->status === 'Lunas' ? 'paid' : 'unpaid' }}">
+                            {{ $dataTerakhir->status }}
+                        </span>
+                    </div>
 
-            <div class="tagihan">
-                Jumlah Meteran: {{ $dataTerakhir->meteran }} <br>
-                Harga: Rp. {{ number_format($dataTerakhir->harga, 0, ',', '.') }} <br>
-                Jatuh Tempo: {{ $dataTerakhir->tanggal }} <br>
-                Status: {{ $dataTerakhir->status }} <br><br>
+                    <div class="billing-body">
+                        <div class="billing-item">
+                            <span>Jumlah Meteran</span>
+                            <strong>{{ $dataTerakhir->meteran }}</strong>
+                        </div>
 
-                <button id="payButton">Lakukan Pembayaran</button>
+                        <div class="billing-item">
+                            <span>Total Tagihan</span>
+                            <strong class="price">
+                                Rp {{ number_format($dataTerakhir->harga, 0, ',', '.') }}
+                            </strong>
+                        </div>
 
-                <div id="paymentOptions" style="display:none; margin-top:10px;">
-                    <button id="tunaiButton">Tunai</button>
-                    <button id="nonTunaiButton">Non Tunai</button>
-                </div>
+                        <div class="billing-item">
+                            <span>Jatuh Tempo</span>
+                            <strong class="due-date">{{ $dataTerakhir->tanggal }}</strong>
+                        </div>
+                    </div>
 
-                <p id="waitingMessage" style="display:none; color:green; margin-top:10px;">
-                    Silakan tunggu konfirmasi admin...
-                </p>    
+                    <div class="billing-actions">
+                        <button id="payButton" class="btn-primary">
+                            💳 Bayar Sekarang
+                        </button>
+
+                        <div id="paymentOptions" class="payment-options">
+                            <button id="tunaiButton" class="btn-outline">
+                                💵 Tunai
+                            </button>
+                            <button id="nonTunaiButton" class="btn-outline">
+                                📱 Non Tunai
+                            </button>
+                        </div>
+
+                        <p id="waitingMessage" class="waiting-msg">
+                            ⏳ Silakan tunggu konfirmasi admin...
+                        </p>
+                    </div>
             </div>
         @else
-            <p>Tidak ada tagihan yang harus dibayar.</p>
+           <div class="empty-state success">
+                <div class="empty-icon">✅</div>
+                <h2>Tidak Ada Tagihan</h2>
+                <p>Semua tagihan kamu sudah <strong>lunas</strong>. Terima kasih 🙏</p>
+            </div>
         @endif
     </section>
 
     <script>
+        function toggleMenu() {
+            document.getElementById("menu").classList.toggle("show");
+        }
         document.addEventListener("DOMContentLoaded", function () {
             const payButton = document.getElementById("payButton");
             const paymentOptions = document.getElementById("paymentOptions");

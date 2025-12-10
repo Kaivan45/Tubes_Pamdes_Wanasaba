@@ -2,13 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use App\Models\Data;
 use App\Models\User;
+use Illuminate\View\View;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\View\View;
 
 class UserController extends Controller
 {
@@ -30,6 +33,7 @@ class UserController extends Controller
 
         // Query semua data
         $dataSemuaQuery = Data::where('user_id', $userId)
+            ->where('tanggal', '>=', Carbon::now()->subYear())
             ->orderBy('created_at', 'desc');
 
         // Jika data terakhir ada dan belum lunas, jangan tampilkan di dataSemua
@@ -37,12 +41,40 @@ class UserController extends Controller
             $dataSemuaQuery->where('id', '!=', $dataTerakhir->id);
         }
 
-        $dataSemua = $dataSemuaQuery->get();
+        $dataSemua = $dataSemuaQuery->Simplepaginate(1);
 
         return view('home', [
             'title' => 'Dashboard Pelanggan',
             'dataTerakhir' => $dataTerakhir,
             'dataSemua' => $dataSemua,
+        ]);
+        
+    }
+
+    public function dashboard(): View
+    {
+        $tahun = now()->year;
+
+        $pemasukan = Data::select(
+                DB::raw('MONTH(updated_at) as bulan'),
+                DB::raw('SUM(harga) as total')
+            )
+            ->where('status', 'Lunas')
+            ->whereYear('updated_at', $tahun)
+            ->groupBy(DB::raw('MONTH(updated_at)'))
+            ->pluck('total', 'bulan');
+
+        // Buat array 12 bulan (default 0)
+        $dataBulanan = [];
+        for ($i = 1; $i <= 12; $i++) {
+            $dataBulanan[] = $pemasukan[$i] ?? 0;
+        }
+
+        return view('haladmin', [
+            'title' => 'Dashboard Admin',
+            'jumlahUser' => User::where('role', 'pelanggan')->count(),
+            'pemasukanBulanan' => $dataBulanan,
+            'tahun' => $tahun
         ]);
     }
 

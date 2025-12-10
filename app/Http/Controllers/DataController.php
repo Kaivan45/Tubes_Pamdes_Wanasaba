@@ -68,7 +68,7 @@ class DataController extends Controller
             'user_id' => 'required|exists:users,id',
             'meteran' => 'required|numeric|min:0',
             'harga' => 'required|numeric|min:0',
-            'tanggal' => 'required|date',
+            'tanggal' => ['required', 'date', 'after_or_equal:today'],
         ]);
 
         // Simpan ke tabel Data

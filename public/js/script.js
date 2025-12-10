@@ -3,7 +3,7 @@ function toggleMenu() {
 }
 
 
-const hargaPerMeter = 1000;
+const hargaPerMeter = 500;
 const meteranInput = document.getElementById('meteran');
 const hargaDisplay = document.getElementById('hargaDisplay');
 const hargaHidden = document.getElementById('harga');

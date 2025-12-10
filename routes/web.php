@@ -13,9 +13,7 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/', function () {
         if (Auth::user()->role == 'admin') {
-            $jumlahUser = User::totalRegularUsers();
-
-            return view('haladmin', ['title' => 'Dashboard Admin', 'jumlahUser' => $jumlahUser]);
+            return redirect()->route('user.dashboard');
         } else {
             return redirect('/pelanggan');
         }
@@ -24,6 +22,7 @@ Route::middleware(['auth'])->group(function () {
     /* ------------------ ROUTE KHUSUS ADMIN ------------------ */
     Route::middleware(['admin'])->group(function () {
 
+        Route::get('/haladmin', [UserController::class, 'dashboard'])->name('user.dashboard');
         Route::get('/haltambah', fn () => view('haltambah', ['title' => 'Tambah Data']));
 
         Route::get('/tampil', fn () => view('tampil', [

@@ -35,7 +35,7 @@
         <tbody>
             @foreach ($data as $d)
             <tr>
-                <td>{{ $loop->iteration }}</td>
+                <td>{{ $data->firstItem() + $loop->index  }}</td>
                 <td>{{ $d->name }}</td>
                 <td>{{ $d->alamat }}</td>
                 <td>{{ $d->noHp }}</td>

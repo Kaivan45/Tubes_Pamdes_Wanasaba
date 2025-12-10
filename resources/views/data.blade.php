@@ -29,7 +29,7 @@
         <input type="hidden" name="user_id" id="id" placeholder="Status" value="{{ $user->id }}" readonly/>
 
         <label for="tanggal">Tanggal Tagihan</label>
-        <input type="date" name="tanggal" id="tanggal" placeholder="Tanggal" required/>
+        <input type="date" name="tanggal" id="tanggal" placeholder="Tanggal" min="{{ date('Y-m-d') }}" required/>
 
         <label for="meteran">Input meteran</label>
         <input type="number" name="meteran" id="meteran" step="any" min="0" placeholder="Masukkan meter" required/>

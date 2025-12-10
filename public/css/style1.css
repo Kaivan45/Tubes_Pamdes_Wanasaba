@@ -131,3 +131,222 @@ table th {
 .tagihan a:hover {
   background-color: #00517c;   
 }
+
+.billing-card {
+  max-width: 450px;
+  margin: 30px auto;
+  background: linear-gradient(180deg, #ffffff, #f8fbff);
+  border-radius: 14px;
+  padding: 25px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+}
+
+.billing-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.billing-header h2 {
+  font-size: 20px;
+  color: #0077b6;
+}
+
+.billing-status {
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: bold;
+}
+
+.billing-status.unpaid {
+  background: #ffe5e5;
+  color: #e63946;
+}
+
+.billing-status.paid {
+  background: #e5f7ed;
+  color: #2a9d8f;
+}
+
+.billing-body {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-bottom: 20px;
+}
+
+.billing-item {
+  display: flex;
+  justify-content: space-between;
+  font-size: 15px;
+}
+
+.billing-item span {
+  color: #555;
+}
+
+.billing-item strong {
+  color: #222;
+}
+
+.price {
+  color: #e63946;
+  font-size: 18px;
+}
+
+.due-date {
+  color: #ff9800;
+}
+
+.billing-actions {
+  text-align: center;
+}
+
+.btn-primary {
+  width: 100%;
+  padding: 14px;
+  background: linear-gradient(135deg, #0077b6, #00b4d8);
+  border: none;
+  border-radius: 10px;
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 15px rgba(0,119,182,0.4);
+}
+
+.payment-options {
+  display: none;
+  margin-top: 15px;
+  gap: 12px;
+  justify-content: center;
+}
+
+.payment-options button {
+  flex: 1;
+}
+
+.btn-outline {
+  padding: 10px;
+  border-radius: 8px;
+  border: 2px solid #0077b6;
+  background: white;
+  color: #0077b6;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.btn-outline:hover {
+  background: #0077b6;
+  color: white;
+}
+
+.waiting-msg {
+  display: none;
+  margin-top: 15px;
+  color: #2a9d8f;
+  font-weight: bold;
+}
+
+.menu-toggle {
+  display: none;
+  font-size: 26px;
+  background: none;
+  border: none;
+  color: white;
+  cursor: pointer;
+}
+
+@media (max-width: 600px) {
+
+  header {
+    flex-wrap: wrap;
+  }
+
+  .responsive-table thead {
+    display: none; /* sembunyikan header */
+  }
+
+  .responsive-table,
+  .responsive-table tbody,
+  .responsive-table tr,
+  .responsive-table td {
+    display: block;
+    width: 100%;
+  }
+
+  .responsive-table tr {
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    margin-bottom: 15px;
+    padding: 10px;
+  }
+
+  .responsive-table td {
+    text-align: left;
+    padding: 8px 10px;
+    border: none;
+    border-bottom: 1px solid #eee;
+    position: relative;
+    font-size: 14px;
+  }
+
+  .responsive-table td:last-child {
+    border-bottom: none;
+  }
+
+  /* Label kolom */
+  .responsive-table td::before {
+    content: attr(data-label);
+    display: block;
+    font-weight: bold;
+    color: #0077b6;
+    margin-bottom: 3px;
+    font-size: 13px;
+  }
+
+  .billing-card {
+    max-width: 100%;
+    margin: 20px auto;
+    padding: 20px;
+  }
+
+  table {
+    font-size: 14px;
+  }
+
+  .menu-toggle {
+    display: block;
+  }
+
+  nav {
+    width: 100%;
+  }
+
+  nav ul {
+    display: none;
+    flex-direction: column;
+    background: #0077b6;
+    width: 100%;
+    margin-top: 10px;
+    border-radius: 8px;
+    padding: 10px 0;
+  }
+
+  nav ul.show {
+    display: flex;
+  }
+
+  nav ul li {
+    text-align: center;
+    padding: 10px 0;
+  }
+}
