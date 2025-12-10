@@ -41,7 +41,7 @@ class UserController extends Controller
             $dataSemuaQuery->where('id', '!=', $dataTerakhir->id);
         }
 
-        $dataSemua = $dataSemuaQuery->Simplepaginate(1);
+        $dataSemua = $dataSemuaQuery->Simplepaginate(3);
 
         return view('home', [
             'title' => 'Dashboard Pelanggan',
