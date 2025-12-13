@@ -81,7 +81,7 @@
         @if ($dataTerakhir && $dataTerakhir->status !== 'Lunas')
             <div class="billing-card">
                     <div class="billing-header">
-                        <h2>Tagihan Bulan Ini</h2>
+                        <h2>Tagihan</h2>
                         <span class="billing-status {{ $dataTerakhir->status === 'Lunas' ? 'paid' : 'unpaid' }}">
                             {{ $dataTerakhir->status }}
                         </span>

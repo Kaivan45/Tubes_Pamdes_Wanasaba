@@ -669,5 +669,11 @@ table th {
   .chart-wrapper {
     height: 260px;
   }
+
+  .data-user td:nth-child(1)::before { content: "No"; }
+  .data-user td:nth-child(2)::before { content: "Nama"; }
+  .data-user td:nth-child(3)::before { content: "Alamat"; }
+  .data-user td:nth-child(4)::before { content: "No HP"; }
+  .data-user td:nth-child(5)::before { content: "Aksi"; }
   
 }

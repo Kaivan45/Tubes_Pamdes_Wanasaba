@@ -22,7 +22,7 @@
         <button type="submit"><i class="fa-solid fa-magnifying-glass"></i> Cari</button>
     </form>
 
-    <table border="1" class="data-table">
+    <table border="1" class="data-table data-user">
         <thead>
             <tr>
                 <th>No</th>

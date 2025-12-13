@@ -28,8 +28,16 @@ class UserController extends Controller
         // Ambil data terakhir
         /** @var Data|null $dataTerakhir */
         $dataTerakhir = Data::where('user_id', $userId)
+            ->where('status', '!=', 'Lunas')
             ->latest()
             ->first();
+
+        // Jika semua sudah lunas, ambil data terakhir normal
+        if (!$dataTerakhir) {
+            $dataTerakhir = Data::where('user_id', $userId)
+                ->latest()
+                ->first();
+        }
 
         // Query semua data
         $dataSemuaQuery = Data::where('user_id', $userId)
@@ -37,7 +45,7 @@ class UserController extends Controller
             ->orderBy('created_at', 'desc');
 
         // Jika data terakhir ada dan belum lunas, jangan tampilkan di dataSemua
-        if ($dataTerakhir !== null && $dataTerakhir->status !== 'Lunas') {
+        if ($dataTerakhir && $dataTerakhir->status !== 'Lunas') {
             $dataSemuaQuery->where('id', '!=', $dataTerakhir->id);
         }
 
