@@ -83,26 +83,26 @@ class DataController extends Controller
         return redirect()->route('data.index')->with('success', 'Data meteran berhasil ditambahkan!');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     * @param Request $request
-     * @return RedirectResponse 
-     */
-    public function store(Request $request): RedirectResponse
-    {
-        $validated = $request->validate([
-            'user_id' => 'required|exists:users,id',
-            'meteran' => 'required|numeric|min:0',
-            'harga' => 'required|numeric|min:0',
-        ]);
+    // /**
+    //  * Store a newly created resource in storage.
+    //  * @param Request $request
+    //  * @return RedirectResponse 
+    //  */
+    // public function store(Request $request): RedirectResponse
+    // {
+    //     $validated = $request->validate([
+    //         'user_id' => 'required|exists:users,id',
+    //         'meteran' => 'required|numeric|min:0',
+    //         'harga' => 'required|numeric|min:0',
+    //     ]);
 
-        Data::create($validated + [
-            'status' => 'Belum Lunas',
-            'tanggal' => now(),
-        ]);
+    //     Data::create($validated + [
+    //         'status' => 'Belum Lunas',
+    //         'tanggal' => now(),
+    //     ]);
 
-        return redirect('/tampil')->with('success', 'berhasil di inputkan');
-    }
+    //     return redirect('/tampil')->with('success', 'berhasil di inputkan');
+    // }
 
     /**
      * Display the specified resource.
@@ -159,22 +159,22 @@ class DataController extends Controller
         return redirect('/tampil')->with('success', 'Data berhasil dihapus!');
     }
 
-    /**
-     * Remove the specified user resource from storage.
-     * @param string $username
-     * @return RedirectResponse 
-     */
-    public function destroy2(string $username): RedirectResponse
-    {
-        // first() bisa mengembalikan User (Model) atau null (jika tidak ditemukan)
-        $user = User::where('username', $username)->first();
+    // /**
+    //  * Remove the specified user resource from storage.
+    //  * @param string $username
+    //  * @return RedirectResponse 
+    //  */
+    // public function destroy2(string $username): RedirectResponse
+    // {
+    //     // first() bisa mengembalikan User (Model) atau null (jika tidak ditemukan)
+    //     $user = User::where('username', $username)->first();
 
-        if ($user !== null) { 
-            $user->delete();
-            return redirect()->back()->with('success', 'User berhasil dihapus.');
-        }
+    //     if ($user !== null) { 
+    //         $user->delete();
+    //         return redirect()->back()->with('success', 'User berhasil dihapus.');
+    //     }
 
-        // Tambahkan return jika user tidak ditemukan, biasanya redirect dengan error.
-        return redirect()->back()->with('error', 'User tidak ditemukan.');
-    }
+    //     // Tambahkan return jika user tidak ditemukan, biasanya redirect dengan error.
+    //     return redirect()->back()->with('error', 'User tidak ditemukan.');
+    // }
 }

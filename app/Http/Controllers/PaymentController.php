@@ -113,7 +113,6 @@ class PaymentController extends Controller
         $params = [
             'transaction_details' => [
                 'order_id' => $orderId,
-                // Pastikan totalbayar adalah int
                 'gross_amount' => (int) $transaksi->totalbayar,
             ],
             'customer_details' => [

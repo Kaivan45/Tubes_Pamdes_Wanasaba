@@ -30,7 +30,7 @@ Route::middleware(['auth'])->group(function () {
             'data' => Data::with('user')->filter()->belumLunasFirst()->simplePaginate(10)->withQueryString(),
         ]));
 
-        Route::post('/data/store', [DataController::class, 'store'])->name('data.store');
+        // Route::post('/data/store', [DataController::class, 'store'])->name('data.store');
         Route::get('/data/{data:slug}/edit', [DataController::class, 'edit'])->name('data.edit');
         Route::put('/data/{data:slug}', [DataController::class, 'update'])->name('data.update');
         Route::get('/data/{data:slug}', [DataController::class, 'show'])->name('data.show');
