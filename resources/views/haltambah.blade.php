@@ -1,16 +1,16 @@
 <x-layout>
     <x-slot:title>{{ $title }}</x-slot:title>
 
-    @if(session('success'))
+    @if (session('success'))
         <div class="alert alert-success">
             {{ session('success') }}
         </div>
     @endif
 
-    @if($errors->any())
+    @if ($errors->any())
         <div class="alert alert-danger">
-            @foreach($errors->all() as $error)
-            <p>{{ $error }}</p>
+            @foreach ($errors->all() as $error)
+                <p>{{ $error }}</p>
             @endforeach
         </div>
     @endif
@@ -26,10 +26,11 @@
         <label for="username">Username</label>
         <input type="text" id="username" name="username" placeholder="Masukkan username" required />
 
-       <label for="password">Password</label>
+        <label for="password">Password</label>
         <div style="position: relative;">
-            <input type="password" id="password" name="password" placeholder="Masukkan password" required style="padding-right: 2.5rem; height: 40px;" />
-            <span class="togglePassword" data-target="password" 
+            <input type="password" id="password" name="password" placeholder="Masukkan password" required
+                style="padding-right: 2.5rem; height: 40px;" />
+            <span class="togglePassword" data-target="password"
                 style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); cursor: pointer; font-size: 18px;">
                 👁️
             </span>
@@ -37,8 +38,9 @@
 
         <label for="password_confirmation">Konfirmasi Password</label>
         <div style="position: relative;">
-            <input type="password" id="password_confirmation" name="password_confirmation" placeholder="Masukkan password lagi" required style="padding-right: 2.5rem; height: 40px;" />
-            <span class="togglePassword" data-target="password_confirmation" 
+            <input type="password" id="password_confirmation" name="password_confirmation"
+                placeholder="Masukkan password lagi" required style="padding-right: 2.5rem; height: 40px;" />
+            <span class="togglePassword" data-target="password_confirmation"
                 style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); cursor: pointer; font-size: 18px;">
                 👁️
             </span>
@@ -48,7 +50,8 @@
         <input type="text" id="alamat" name="alamat" placeholder="Masukkan alamat" required />
 
         <label for="telepon">No Telepon</label>
-        <input type="text" id="telepon" name="noHp" placeholder="Masukkan nomor telepon" required oninput="this.value = this.value.replace(/[^0-9]/g, '');"/>
+        <input type="text" id="telepon" name="noHp" placeholder="Masukkan nomor telepon" maxlength="15" required
+            oninput="this.value = this.value.replace(/[^0-9]/g, '');" />
 
         <button type="submit">Submit</button>
     </form>
