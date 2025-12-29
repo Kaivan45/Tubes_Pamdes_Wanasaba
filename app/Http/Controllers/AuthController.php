@@ -31,8 +31,7 @@ class AuthController extends Controller
                     return redirect('/pelanggan');
                 }
             }
-            // Walaupun tidak mungkin sampai di sini jika Auth::attempt berhasil,
-            // secara teknis tetap perlu ditangani jika Auth::user() mengembalikan null.
+
         }
 
         return back()->withErrors([
